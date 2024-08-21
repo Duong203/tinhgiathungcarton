@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính số khối thùng carton A1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .menu {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .menu button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .menu button:hover {
+            background-color: #218838;
+        }
+        a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <button onclick="showSection('tinhGia')"><a href="index.html">Tính Giá Thùng</a></button>
+            <button onclick="showSection('tinhKhoiLuong')"><a href="Tinhkhoiluong.html">Tính Khối Lượng Thùng</a></button>
+            <button onclick="showSection('tinhSoKhoi')"><a href="tinhkhoi.html">Tính Số Khối Thùng</a></button>
+        </div>
+        <h1>Tính số khối thùng carton A1</h1>
+        <div class="input-group">
+            <label for="loai-thung">Loại thùng:</label>
+            <select id="loai-thung">
+                <option value="9">3 lớp sóng E</option>
+                <option value="13">3 lớp sóng B</option>
+                <option value="9">3 lớp sóng C</option>
+                <option value="12">5 lớp sóng BE</option>
+                <option value="13.5">5 lớp sóng BC</option>
+                <option value="8">7 lớp sóng</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="d">Chiều dài (cm):</label>
+            <input type="number" id="d" placeholder="Nhập chiều dài">
+        </div>
+        <div class="input-group">
+            <label for="r">Chiều rộng (cm):</label>
+            <input type="number" id="r" placeholder="Nhập chiều rộng">
+        </div>
+        <div class="input-group">
+            <label for="c">Chiều cao (cm):</label>
+            <input type="number" id="c" placeholder="Nhập chiều cao">
+        </div>
+        <div class="input-group">
+            <label for="n">Số lượng thùng:</label>
+            <input type="number" id="n" placeholder="Nhập số lượng thùng">
+        </div>
+        <div class="button-group">
+            <button onclick="tinhSoKhoi()">Tính số khối</button>
+            <button onclick="resetForm()">Nhập lại</button>
+        </div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function tinhSoKhoi() {
+            const d = parseFloat(document.getElementById('d').value) / 100; // chuyển đổi sang mét
+            const r = parseFloat(document.getElementById('r').value) / 100; // chuyển đổi sang mét
+            const c = parseFloat(document.getElementById('c').value) / 100; // chuyển đổi sang mét
+            const n = parseInt(document.getElementById('n').value);
+            const C = parseFloat(document.getElementById('loai-thung').value) / 100; // chuyển đổi sang mét
+            
+            const A = d + r;
+            const B = r + c;
+            const soKhoi = A * B * C * n;
+
+            let thongBao;
+            switch (C * 100) { // kiểm tra giá trị trước khi chuyển đổi sang mét
+                case 10:
+                    thongBao = "20 thùng / bó.";
+                    break;
+                case 13:
+                    thongBao = "20 thùng / bó.";
+                    break;
+                case 9:
+                    thongBao = "10 thùng / bó.";
+                    break;
+                case 12:
+                    thongBao = "10 thùng / bó.";
+                    break;
+                case 13.5:
+                    thongBao = "10 thùng / bó.";
+                    break;
+                case 8:
+                    thongBao = "5 thùng / bó.";
+                    break;
+                default:
+                    thongBao = "";
+                    break;
+            }
+
+            document.getElementById('result').innerHTML = `
+                Số khối: ${soKhoi.toFixed(4)} m³<br><br>
+                ${thongBao}
+            `;
+        }
+
+        function resetForm() {
+            document.getElementById('loai-thung').value = '';
+            document.getElementById('d').value = '';
+            document.getElementById('r').value = '';
+            document.getElementById('c').value = '';
+            document.getElementById('n').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
